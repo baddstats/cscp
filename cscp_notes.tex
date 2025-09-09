@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{graphicx}
+
+\title{\textit{\textbf{Technical Report}}\\Distinctions and Similarities Between Log-Gaussian Cox Processes and Chi-squared Cox Processes}
+\author{Tilman, Charlotte (?), Adrian (?), others (?), ...}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	
+	\section{Introduction}
+	Cox processes (doubly stochastic Poisson processes) are a flexible class of models for clustered spatial point patterns. The \emph{log-Gaussian Cox process} (LGCP) is by far the most widely studied and applied, owing to its tractability and natural connection to Gaussian random fields (GRFs). 
+	
+	An alternative---rarely used in practice---is the \emph{chi-squared Cox process} (CSCP), in which the random intensity is given by the sum of squared Gaussian fields. Despite their similarities, the two processes induce different distributional and clustering properties. This document summarizes key properties of both models, and sketches possible avenues for publication that highlight the merits and potential uses of CSCPs.
+	
+	\section{Definitions}
+	
+	\subsection{Log-Gaussian Cox Process (LGCP)}
+	An LGCP is defined by
+	\[
+	\Lambda(s) = \exp\{ Z(s) \}, \qquad s \in D \subset \mathbb{R}^d,
+	\]
+	where $Z(s)$ is a Gaussian random field with mean function $\mu(s)$ and covariance $C(s,s')$. Conditional on $\Lambda$, the point process $X$ is Poisson with intensity function $\Lambda(s)$.
+	
+	Key properties:
+	\begin{itemize}
+		\item $\mathbb{E}[\Lambda(s)] = \exp(\mu(s) + \tfrac{1}{2}\sigma^2)$.
+		\item The pair correlation function is
+		\[
+		g(s,s') = \exp\{ C(s,s') \},
+		\]
+		showing that clustering strength depends exponentially on covariance. In particular, $g(0)=\exp(\sigma^2)$ can be arbitrarily large.
+		\item Widely used in practice: tractable through moment properties, simulation methods, and fitting algorithms (composite likelihood, Bayesian inference, INLA).
+	\end{itemize}
+	
+	\subsection{Chi-squared Cox Process (CSCP)}
+	A CSCP is defined by
+	\[
+	\Lambda(s) = \sum_{i=1}^k Z_i^2(s), \qquad s \in D,
+	\]
+	where $\{Z_i(s)\}_{i=1}^k$ are independent Gaussian random fields with mean $\mu_i(s)$ and covariance functions $C_i(s,s')$.
+	
+	Key properties:
+	\begin{itemize}
+		\item $\mathbb{E}[\Lambda(s)] = \sum_{i=1}^k \big( \mu_i(s)^2 + \sigma_i^2 \big)$.
+		\item $\mathrm{Var}[\Lambda(s)] = 2\sum_{i=1}^k \big(\sigma_i^4 + 2\mu_i^2\sigma_i^2 \big)$.
+		\item The pair correlation has the form
+		\[
+		g(s,s') = 1 + \frac{\sum_{i=1}^k \big( \mathrm{Cov}(Z_i(s),Z_i(s')) \big)^2}{\big( \sum_{i=1}^k \sigma_i^2 + \mu_i^2 \big)^2}.
+		\]
+		In the symmetric zero-mean case, $g(0)=1+2/k$, so clustering strength at very short lags is bounded.
+		\item Marginally, $\Lambda(s)$ follows a noncentral chi-squared distribution with $k$ degrees of freedom and noncentrality parameters $\mu_i^2/\sigma_i^2$. These marginals have lighter (exponential) tails compared to the lognormal marginals of an LGCP.
+	\end{itemize}
+	
+	\section{Similarities and Differences}
+	
+	\subsection*{Similarities}
+	\begin{itemize}
+		\item Both are Cox processes driven by latent Gaussian random fields.
+		\item Both induce clustering via spatial correlation in the latent fields.
+		\item Both can represent multi-scale clustering when multiple latent fields with different correlation lengths are included.
+		\item Both are second-order intensity reweighted stationary under suitable conditions, allowing use of summary statistics such as the pair correlation function.
+	\end{itemize}
+	
+	\subsection*{Differences}
+	\begin{itemize}
+		\item \textbf{Marginals:} LGCP intensities are lognormal with heavy tails; CSCP intensities are chi-squared/gamma-like with lighter exponential tails.
+		\item \textbf{Pair correlation:} For LGCP, $g(s,s') = \exp\{ C(s,s') \}$ and $g(0)$ can be arbitrarily large; for CSCP, $g(s,s')$ depends quadratically on covariance and $g(0)$ is bounded, yielding less explosive but potentially more interpretable clustering strength.
+		\item \textbf{Role of $k$:} The degrees of freedom $k$ in CSCP controls variability and relative clustering. For large $k$, the CSCP intensity approaches Gaussianity by the central limit theorem, reducing to near-homogeneous Poisson behavior.
+		\item \textbf{Interpretability:} In LGCP, the log-scale linear predictor is directly interpretable. In CSCP, $k$ may be viewed as the number of independent clustering mechanisms.
+	\end{itemize}
+	
+	\section{Ideas for a Publication}
+	\begin{enumerate}
+		\item \textbf{Theoretical comparison:} Provide a clear account of first- and second-order properties of CSCPs, in direct analogy to LGCPs. Highlight differences in marginal tails and clustering behavior.
+		\item \textbf{Simulation study:} Illustrate how $k$, variance, and scale parameters affect intensity surfaces and point patterns, contrasting with LGCPs.
+		\item \textbf{Multi-scale modeling:} Explore whether CSCPs with a few components of differing scales can more naturally capture multi-scale clustering than LGCPs.
+		\item \textbf{Estimation methods:} Investigate feasibility of parameter estimation via composite likelihood or minimum-contrast, especially in the context of identifiability of $k$ and scale parameters.
+		\item \textbf{Applied examples:} Consider infectious disease or ecology datasets where extreme local clustering occurs atop broader structure. Argue that CSCPs may provide a better fit than LGCPs by offering bounded clustering strength and additive multi-scale decomposition.
+		\item \textbf{Connection to degrees of freedom:} Emphasize interpretability of $k$ as a ``degrees of freedom'' parameter, akin to chi-squared tests, with implications for variability control.
+	\end{enumerate}
+	
+\end{document}
