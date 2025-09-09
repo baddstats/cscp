@@ -26,6 +26,7 @@ simulateCSCP <- function(p, W = owin(), nsim=1, drop=TRUE) {
       Zij <- Zlist[[i]][[j]]
       Lamj <- Lamj + Zij^2
     }
+    Lamlist[[j]] <- Lamj
     Ylist[[j]] <- rpoispp(Lamj)
   }
   result <- simulationresult(Ylist, nsim, drop)
