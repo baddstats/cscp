@@ -3,6 +3,9 @@
 \usepackage{amsmath,amssymb,amsthm,bm}
 \usepackage{graphicx}
 
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
 \title{\textit{\textbf{Technical Report}}\\Distinctions and Similarities Between Log-Gaussian Cox Processes and Chi-squared Cox Processes}
 \author{Tilman, Charlotte (?), Adrian (?), others (?), ...}
 \date{\today}
@@ -71,6 +74,164 @@
 		\item \textbf{Role of $k$:} The degrees of freedom $k$ in CSCP controls variability and relative clustering. For large $k$, the CSCP intensity approaches Gaussianity by the central limit theorem, reducing to near-homogeneous Poisson behavior.
 		\item \textbf{Interpretability:} In LGCP, the log-scale linear predictor is directly interpretable. In CSCP, $k$ may be viewed as the number of independent clustering mechanisms.
 	\end{itemize}
+	
+%	\section{Illustration: Pair Correlation Functions}
+	
+%	To visualise the contrast, Figure~\ref{fig:gcomp} sketches the typical shapes of 
+%	the pair correlation functions $g(h)$ for an LGCP and for a CSCP with two components. 
+%	For the LGCP, $g(h)=\exp\{\sigma^2 \rho(h)\}$ grows exponentially with the covariance, 
+%	so $g(0)=\exp(\sigma^2)$ can be arbitrarily large. For the CSCP, 
+%	$g(h)=1+\frac{\sum_i \sigma_i^4 \rho_i(h)^2}{(\sum_i \sigma_i^2)^2}$, so $g(0)$ is 
+%	bounded (e.g.\ $1+2/k$ in the symmetric case), and the shape is additive across scales.
+%	
+
+
+
+
+\section{Covariance structure of the CSCP intensity field}
+
+Let the chi-squared Cox process (CSCP) be driven by $k$ independent Gaussian random fields 
+\[
+Z_i(s) \sim \mathrm{GRF}\!\big(\mu_i,\, \sigma_i^2 \rho_i(\|s-s'\|)\big), 
+\qquad i=1,\dots,k,
+\]
+where $\mu_i$ is the mean, $\sigma_i^2$ the marginal variance, and 
+$\rho_i(h)$ the correlation function at spatial lag $h=\|s-s'\|$. 
+The random intensity is
+\[
+\Lambda(s) = \sum_{i=1}^k Z_i(s)^2 .
+\]
+
+\subsection{Mean intensity}
+By independence across $i$,
+\[
+\mathbb{E}\{\Lambda(s)\}
+= \sum_{i=1}^k \mathbb{E}\{Z_i(s)^2\}
+= \sum_{i=1}^k \big(\mu_i^2 + \sigma_i^2\big).
+\]
+
+\subsection{Covariance function (general case)}
+For any two locations $s,s'$ with separation $h=\|s-s'\|$,
+\[
+\operatorname{Cov}_\Lambda(h) 
+= \operatorname{Cov}\!\big(\Lambda(s), \Lambda(s')\big)
+= \sum_{i=1}^k \operatorname{Cov}\!\big(Z_i(s)^2, Z_i(s')^2\big),
+\]
+since the fields are independent across $i$.
+
+Applying Isserlis’ (Wick’s) theorem for fourth moments of Gaussians,
+\[
+\mathbb{E}[Z_i(s)^2 Z_i(s')^2]
+= \mathbb{E}[Z_i(s)^2]\,\mathbb{E}[Z_i(s')^2]
++ 2\,\big(\operatorname{Cov}(Z_i(s),Z_i(s'))\big)^2.
+\]
+
+Thus
+\[
+\operatorname{Cov}\!\big(Z_i(s)^2,Z_i(s')^2\big)
+= 2 \big(\sigma_i^2 \rho_i(h)\big)^2 \;+\; 4 \mu_i^2 \sigma_i^2 \rho_i(h).
+\]
+
+Hence the full covariance is
+\[
+\boxed{\;
+	\operatorname{Cov}_\Lambda(h) 
+	= \sum_{i=1}^k \Big[\,2 \sigma_i^4 \rho_i(h)^2 \;+\; 4 \mu_i^2 \sigma_i^2 \rho_i(h)\,\Big].
+	\;}
+\]
+
+\subsection{Zero-mean special case}
+If $\mu_i=0$ for all $i$, this reduces to
+\[
+\boxed{\;\;
+	\operatorname{Cov}_\Lambda(h) = 2 \sum_{i=1}^k \sigma_i^4 \rho_i(h)^2 .
+	\;\;}
+\]
+This case is often taken as the baseline in the literature (e.g. Møller and Waagepetersen, 2004).
+
+\subsection{Pair correlation function}
+The pair correlation function is defined as
+\[
+g(h) \;=\; 1 + \frac{\operatorname{Cov}_\Lambda(h)}{ \big(\mathbb{E}\{\Lambda(s)\}\big)^2 }.
+\]
+For the zero-mean, equal-variance case with exponential correlation $\rho_i(h) = \exp(-h/\phi_i)$, 
+\[
+g(h)-1 \;=\; \sum_{i=1}^k b_i \, e^{-2h/\phi_i},
+\qquad 
+b_i = \frac{2\sigma_i^4}{\Big(\sum_{j=1}^k \sigma_j^2\Big)^2}.
+\]
+
+\subsection{Semilog transformation and scale identification}
+Writing $y(h)=g(h)-1$, for two components we have
+\[
+y(h) = b_S e^{-2h/\phi_S} + b_L e^{-2h/\phi_L}.
+\]
+Taking logs,
+\[
+\log y(h) = \log b_S - \tfrac{2h}{\phi_S} 
++ \log\!\left(1 + \tfrac{b_L}{b_S} e^{-2h\left(\tfrac{1}{\phi_L}-\tfrac{1}{\phi_S}\right)}\right).
+\]
+
+This is a log-sum-exp form: globally curved, but in limiting regimes it becomes linear:
+\begin{align*}
+	\log y(h) &\approx \log b_S - \tfrac{2h}{\phi_S}, && \text{if small scale dominates},\\
+	\log y(h) &\approx \log b_L - \tfrac{2h}{\phi_L}, && \text{if large scale dominates}.
+\end{align*}
+The crossover (“shoulder”) occurs at 
+\[
+h^\star = \frac{\phi_S \phi_L}{2(\phi_L - \phi_S)} 
+\log\!\Big(\tfrac{b_S}{b_L}\Big).
+\]
+
+Thus, on a semilog plot of $g(h)-1$, the CSCP naturally reveals its modular structure: 
+straight-line regimes with slopes $-2/\phi_S$ and $-2/\phi_L$, with the transition at $h^\star$. See Figure \ref{fig:csclgcp-semilog}.
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{semilog_gminus1_with_LGCP.png}
+	\caption{Semilogarithmic plot of $g(h)-1$ for a two-scale CSCP. 
+		Because $g(h)-1 = b_S e^{-2h/\phi_S} + b_L e^{-2h/\phi_L}$, the function is a sum of exponentials. 
+		On the semilog scale, this produces two approximately linear regimes: one at small lags with slope $-2/\phi_S$ (short-range clustering), 
+		and one at larger lags with slope $-2/\phi_L$ (long-range clustering). 
+		The vertical marker denotes the crossover distance $h^\star$, where the two component contributions are equal. 
+		This ``shoulder'' provides a natural diagnostic of the modular structure of CSCPs, 
+		in contrast to LGCPs where multiple scales are entangled in the exponent and the curve remains smoothly curved.}
+	\label{fig:csclgcp-semilog}
+\end{figure}
+
+
+
+%\section*{Interpretation of Figure \ref{fig:csclgcp-semilog}}
+%
+%Figure~\ref{fig:csclgcp-semilog} illustrates a key distinction between chi-squared Cox processes (CSCPs) 
+%and log-Gaussian Cox processes (LGCPs) when modelling multi-scale clustering.
+%
+%
+%
+%\paragraph{Modular structure in CSCP.}
+%On a semilogarithmic plot of $g(r)-1$, each exponential component of the CSCP appears as a straight line 
+%with slope $-2/\phi$. The total CSCP curve (orange solid) therefore transitions sharply between two 
+%linear regimes, with the ``shoulder'' at $h^\star$ indicating the crossover from small-scale (blue dashed) 
+%to large-scale (green dash-dotted) clustering. This modularity makes the underlying scales directly 
+%identifiable: their ranges $\phi_S,\phi_L$ and amplitudes $b_S,b_L$ can be recovered from the slopes 
+%and intercepts of straight-line fits. The orange dotted line demonstrates that a simple two-line 
+%approximation captures the CSCP almost perfectly once the small-scale contribution has faded.
+%
+%\paragraph{Entangled structure in LGCP.}
+%The LGCP curve (black solid), in contrast, remains smoothly curved. Because the covariance terms 
+%combine inside the exponential, the contributions of different scales are entangled. The result is 
+%greater flexibility in shape but reduced interpretability: multiple scales cannot be cleanly read off 
+%from the pair correlation function. Identifying separate correlation lengths therefore requires full 
+%likelihood-based estimation rather than simple diagnostic fits.
+%
+%\paragraph{Implications.}
+%Both models capture multi-scale clustering, but the CSCP uniquely exposes its structure in a way that is 
+%transparent and diagnostically useful. This ``natural modularisation'' suggests that CSCPs may offer 
+%advantages when the scientific goal is to separate and interpret distinct sources of spatial dependence, 
+%rather than merely to reproduce observed clustering.
+%	
+	
 	
 	\section{Ideas for a Publication}
 	\begin{enumerate}
