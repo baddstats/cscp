@@ -2,6 +2,7 @@
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{amsmath,amssymb,amsthm,bm}
 \usepackage{graphicx}
+\usepackage{hyperref}
 
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
@@ -147,7 +148,7 @@ If $\mu_i=0$ for all $i$, this reduces to
 	\operatorname{Cov}_\Lambda(h) = 2 \sum_{i=1}^k \sigma_i^4 \rho_i(h)^2 .
 	\;\;}
 \]
-This case is often taken as the baseline in the literature (e.g. Møller and Waagepetersen, 2004).
+This case is often taken as the baseline in the literature (e.g. Møller and Waagepetersen, 2004 \cite{MW2003book}).
 
 \subsection{Pair correlation function}
 The pair correlation function is defined as
@@ -202,6 +203,101 @@ straight-line regimes with slopes $-2/\phi_S$ and $-2/\phi_L$, with the transiti
 
 
 
+\section*{Positioning relative to existing work}
+
+The model we describe as a \emph{Chi-squared Cox process (CSCP)} is mathematically 
+equivalent to the \emph{permanental process} introduced by McCullagh and M{\o}ller (2006) \cite{McCullaghMoller2006}, 
+and previously foreshadowed in the boson process literature 
+\cite{ShiraiTakahashi2003,ShiraiTakahashi2004}. 
+Their work established the existence, joint densities, and moment properties of 
+processes with intensity fields of the form 
+$\Lambda(s)=\sum_{i=1}^k Z_i(s)^2$, 
+with $Z_i$ Gaussian random fields. In this sense, the theoretical foundation of CSCPs 
+is already solidly in place.
+
+What seems to be missing, however, is applied development. 
+In contrast to log-Gaussian Cox processes (LGCPs), 
+permanental/CSCPs have seen almost no uptake in 
+spatial statistics practice. I think.
+In particular, several potentially valuable aspects have not been explored:
+\begin{itemize}
+	\item \textbf{Diagnostics and interpretability:} 
+	For exponential correlations, $g(h)-1$ decomposes as a sum of exponentials, 
+	which on a semilog plot reveals straight-line regimes with slopes $-2/\phi_i$. 
+	This provides a natural diagnostic and a modular interpretation of multiple scales of clustering --- a feature absent in LGCPs, where scales combine inside the exponent.
+	\item \textbf{Multi-scale modelling:} 
+	The modular structure suggests CSCPs may offer advantages in modelling 
+	both small-scale hotspots and large-scale background variation simultaneously. 
+	Identifying these scales empirically and contrasting them with LGCP fits 
+	has not yet been demonstrated.
+	\item \textbf{Estimation and heuristics:} 
+	Practical inference strategies (e.g.\ composite likelihood, minimum contrast, 
+	or heuristic initialisation from pair correlation diagnostics) remain underexplored.
+	\item \textbf{Applied case studies:} 
+	To our knowledge, there are no published applications of CSCPs to real 
+	epidemiological or ecological point pattern datasets. 
+\end{itemize}
+
+Accordingly, while the permanental/CSCP model itself is not new (some other relevant papers are \cite{WalderBishopICML2017,WalderBishopMCAP2017,Nicolis2022,Eisenbaum2008}), 
+there is possibly scope for novel contributions in terms of 
+applied methodology, diagnostics, and interpretability. 
+Our work is positioned in this gap: to revisit CSCPs with emphasis on their 
+practical merits and to provide the first systematic comparison with LGCPs in applied settings.
+
+
+\bibliographystyle{plain}
+\begin{thebibliography}{10}
+	
+	\bibitem{MW2003book}
+	J.~M{\o}ller and R.~P.~Waagepetersen.
+	\newblock \emph{Statistical Inference and Simulation for Spatial Point Processes}.
+	\newblock Chapman \& Hall/CRC, 2003.
+	Available at Routledge: \url{https://doi.org/10.1201/9780203496930}.
+	
+	\bibitem{McCullaghMoller2006}
+	P.~McCullagh and J.~M{\o}ller.
+	\newblock The permanental process.
+	\newblock \emph{Advances in Applied Probability}, 38(4):873--888, 2006.
+	Open version: Cambridge Core PDF \url{https://www.cambridge.org/core/services/aop-cambridge-core/content/view/1E60BA9879EAE9BBF84321FA390AFD81/S0001867800001361a.pdf/the-permanental-process.pdf}.
+	
+	\bibitem{ShiraiTakahashi2003}
+	T.~Shirai and Y.~Takahashi.
+	\newblock Random point fields associated with certain Fredholm determinants I: fermion, Poisson and boson point processes.
+	\newblock \emph{Journal of Functional Analysis}, 205(2):414--463, 2003.
+	Publisher page: \url{https://www.sciencedirect.com/science/article/pii/S002212360300171X}.
+	
+	\bibitem{ShiraiTakahashi2004}
+	T.~Shirai and Y.~Takahashi.
+	\newblock Random Point Fields Associated with Fermion, Boson and Other Statistics.
+	\newblock In \emph{Stochastic Analysis on Large Scale Interacting Systems}, Advanced Studies in Pure Mathematics 39, pp.~345--354, 2004.
+	Open PDF: \url{https://projecteuclid.org/ebooks/advanced-studies-in-pure-mathematics/Stochastic-Analysis-on-Large-Scale-Interacting-Systems/chapter/Random-Point-Fields-Associated-with-Fermion-Boson-and-Other-Statistics/10.2969/aspm/03910345.pdf}.
+	
+	\bibitem{WalderBishopICML2017}
+	C.~J.~Walder and A.~N.~Bishop.
+	\newblock Fast Bayesian Intensity Estimation for the Permanental Process.
+	\newblock In \emph{Proceedings of the 34th International Conference on Machine Learning (ICML)}, 2017.
+	Open PDF: \url{https://proceedings.mlr.press/v70/walder17a/walder17a.pdf}.
+	
+	\bibitem{WalderBishopMCAP2017}
+	C.~J.~Walder and A.~N.~Bishop.
+	\newblock Gamma Gaussian Cox Processes.
+	\newblock \emph{Methodology and Computing in Applied Probability}, 19(2):447--465, 2017.
+	
+	\bibitem{Nicolis2022}
+	O.~Nicolis, L.~Fernández, and J.~E. Muñoz.
+	\newblock Temporal Cox Process with Folded Normal Intensity.
+	\newblock \emph{Axioms}, 11(10):513, 2022.
+	Open access: \url{https://www.mdpi.com/2075-1680/11/10/513}.
+	
+	\bibitem{Eisenbaum2008}
+	N.~Eisenbaum.
+	\newblock A Cox Process Involved in the Bose--Einstein Condensation.
+	\newblock \emph{Annales Henri Poincaré}, 9(6):1123--1140, 2008.
+	Open PDF: \url{https://link.springer.com/content/pdf/10.1007/s00023-008-0376-6.pdf}.
+	
+\end{thebibliography}
+
+
 %\section*{Interpretation of Figure \ref{fig:csclgcp-semilog}}
 %
 %Figure~\ref{fig:csclgcp-semilog} illustrates a key distinction between chi-squared Cox processes (CSCPs) 
@@ -233,14 +329,14 @@ straight-line regimes with slopes $-2/\phi_S$ and $-2/\phi_L$, with the transiti
 %	
 	
 	
-	\section{Ideas for a Publication}
-	\begin{enumerate}
-		\item \textbf{Theoretical comparison:} Provide a clear account of first- and second-order properties of CSCPs, in direct analogy to LGCPs. Highlight differences in marginal tails and clustering behavior.
-		\item \textbf{Simulation study:} Illustrate how $k$, variance, and scale parameters affect intensity surfaces and point patterns, contrasting with LGCPs.
-		\item \textbf{Multi-scale modeling:} Explore whether CSCPs with a few components of differing scales can more naturally capture multi-scale clustering than LGCPs.
-		\item \textbf{Estimation methods:} Investigate feasibility of parameter estimation via composite likelihood or minimum-contrast, especially in the context of identifiability of $k$ and scale parameters.
-		\item \textbf{Applied examples:} Consider infectious disease or ecology datasets where extreme local clustering occurs atop broader structure. Argue that CSCPs may provide a better fit than LGCPs by offering bounded clustering strength and additive multi-scale decomposition.
-		\item \textbf{Connection to degrees of freedom:} Emphasize interpretability of $k$ as a ``degrees of freedom'' parameter, akin to chi-squared tests, with implications for variability control.
-	\end{enumerate}
+%	\section{Ideas for a Publication}
+%	\begin{enumerate}
+%		\item \textbf{Theoretical comparison:} Provide a clear account of first- and second-order properties of CSCPs, in direct analogy to LGCPs. Highlight differences in marginal tails and clustering behavior.
+%		\item \textbf{Simulation study:} Illustrate how $k$, variance, and scale parameters affect intensity surfaces and point patterns, contrasting with LGCPs.
+%		\item \textbf{Multi-scale modeling:} Explore whether CSCPs with a few components of differing scales can more naturally capture multi-scale clustering than LGCPs.
+%		\item \textbf{Estimation methods:} Investigate feasibility of parameter estimation via composite likelihood or minimum-contrast, especially in the context of identifiability of $k$ and scale parameters.
+%		\item \textbf{Applied examples:} Consider infectious disease or ecology datasets where extreme local clustering occurs atop broader structure. Argue that CSCPs may provide a better fit than LGCPs by offering bounded clustering strength and additive multi-scale decomposition.
+%		\item \textbf{Connection to degrees of freedom:} Emphasize interpretability of $k$ as a ``degrees of freedom'' parameter, akin to chi-squared tests, with implications for variability control.
+%	\end{enumerate}
 	
 \end{document}
