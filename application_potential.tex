@@ -1,0 +1,92 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{hyperref}
+
+\title{Annotated Literature on Multi-Scale Spatial Point Processes \\ and Potential for Chi-Squared Cox Processes (CSCPs)}
+\author{}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Epidemiology}
+	
+	\begin{itemize}
+		\item \textbf{Iftimi, A., Mateu, J., Adelfio, G. (2018). ``A multi-scale area-interaction model for spatio-temporal point patterns.''}  
+		Applied a multi-scale Gibbs process to varicella case locations in Spain. Found small-scale clustering due to contagion and larger-scale regularity.  
+		\emph{Why CSCP:} Suggests two independent processes at different scales; a CSCP could model these as additive stochastic components with clear diagnostics. Not sure the inhibitive aspect would be compatible though.
+		
+		\item \textbf{Iftimi, A., et al. (2017). ``Hybrid Gibbs processes for multi-scale spatial inhomogeneity.''}  
+		Proposed hybrid Gibbs point processes to capture multiple clustering/inhibition scales in disease data.  
+		\emph{Why CSCP:} A CSCP would offer a simpler, random-field-based alternative with a direct diagnostic via $g(h)-1$, if we focus only on clustering.
+	\end{itemize}
+	
+	\section*{Ecology}
+	
+	\begin{itemize}
+		\item \textbf{Wiegand, T., Gunatilleke, C.V.S., Gunatilleke, I.A.U.N., Okuda, T. (2007). ``Analyzing the spatial structure of a Sri Lankan tree species with multiple scales of clustering.'' Ecology 88:3088--3102.}  
+		Showed that \emph{Shorea congestiflora} trees display nested clusters at two distinct radii (25 m, 8 m), implying different recruitment/habitat mechanisms.  
+		\emph{Why CSCP:} A textbook (???) case for additive superposition: separate squared-GRF components can represent large- and small-scale clustering.
+		
+		\item \textbf{Levin, S.A. (1992). ``The problem of pattern and scale in ecology.'' Ecology 73:1943--1967.}  
+		This seems to be a seminal paper on how multiple processes at distinct scales shape ecological patterns.  
+		\emph{Why CSCP:} Supports the philosophy of explicitly modeling independent multi-scale clustering. Could be good to point to this.
+		
+		\item \textbf{Yau, C.Y., Loh, J.M. (2012). ``A Neyman–Scott cluster process with two cluster scales.'' Environmental and Ecological Statistics 19:411--430.}  
+		Extended the Neyman–Scott model to allow two independent cluster scales, applied to ecological data.  
+		\emph{Why CSCP:} As above. Shows the need for multi-scale Cox processes; CSCP offers a different random-field based route.
+	\end{itemize}
+	
+	\section*{Astronomy}
+	
+	\begin{itemize}
+		\item \textbf{Coil, A. (2012). ``Large Scale Structure of the Universe.'' NED Review.}  
+		Described the halo model: galaxy clustering is explained as the sum of ``one-halo'' (within halos) and ``two-halo'' (between halos) terms.  
+		\emph{Why CSCP:} This is directly analogous to additive multi-scale clustering; CSCP could possibly model halo-scale and cosmic-web-scale fields as independent components   ??
+		
+		\item \textbf{Martínez, V.J., Saar, E. (2002). \emph{Statistics of the Galaxy Distribution.}}  
+		Surveyed point process models (including Cox and segment Cox) for cosmic structures, showing multi-scale clustering signatures.  
+		\emph{Why CSCP:} Provides motivation for additive Cox models in cosmology, which could capture both fine and coarse clustering hierarchies. Could be quite handy.
+	\end{itemize}
+	
+	\section*{Seismology}
+	
+	\begin{itemize}
+		\item \textbf{Siino, M., Adelfio, G., D’Alessandro, A. (2017). ``Spatial pattern analysis using hybrid models: an application to the Hellenic seismicity.'' Stoch. Env. Res. Risk Assess. 31:1633--1648.}  
+		Modeled Greek earthquake locations as a hybrid: background seismicity plus clustered aftershocks.  
+		\emph{Why CSCP:} Earthquakes are a natural additive process (background + aftershocks); a CSCP could formalize this as independent intensity fields.
+		
+		\item \textbf{Pei, T., et al. (2012). ``Multi-scale decomposition of point process data.'' GeoInformatica 16:625--652.}  
+		Developed methods to decompose point patterns into scale-specific components, illustrated with seismic data.  
+		\emph{Why CSCP:} Their decomposition in spirit should align with a CSCP’s generative additive structure.
+		
+		\item \textbf{Adelfio, G., Chiodi, M. (2020). ``Overview of methods for multi-structure point processes.'' Stoch. Env. Res. Risk Assess. 34:17--36.}  
+		Reviewed methods for modeling multi-structured point processes across domains. Highlighted superposition as a key tool for multi-scale clustering.  
+		\emph{Why CSCP:} Reinforces the idea that additive models like CSCPs are often more natural than multiplicative LGCPs. This could be quite an important paper to cite.
+	\end{itemize}
+	
+	\section*{Theory and Methodology}
+	
+	\begin{itemize}
+		\item \textbf{McCullagh, P., Møller, J. (2006). ``The permanental process.'' Advances in Applied Probability 38(4):873--888.}  
+		Defined and studied permanental (boson) Cox processes, with intensities given by sums of squared Gaussian fields (chi-square distributed). Provided existence proofs, joint densities, and links to permanents.  
+		\emph{Why CSCP:} This is the theoretical foundation; we can make our work differ by 1) allowing different kernels per component (important given the aforementioned applications) and 2) emphasizing applied diagnostics/inference/fitting tools.
+		
+		\item \textbf{Shirai, T., Takahashi, Y. (2003, 2004). ``Random point fields associated with fermion, Poisson and boson processes.'' J. Funct. Anal. 205(2):414--463; ASPM 39:345--354.}  
+		Formalized boson/permanental processes in the probability literature.  
+		\emph{Why CSCP:} Establishes the connection between squared-GRF intensities and chi-square Cox processes. Need to look at this in more detail.
+		
+		\item \textbf{Walder, C.J., Bishop, A.N. (2017). ``Fast Bayesian Intensity Estimation for the Permanental Process.'' ICML 2017.}  
+		Proposed efficient Bayesian inference for permanental processes using kernel methods.  
+		\emph{Why CSCP:} Shows computational feasibility of additive chi-square intensities... not too keen on worrying about the Bayesian angle just yet, but should keep this in mind.
+		
+		\item \textbf{Walder, C.J., Bishop, A.N. (2017). ``Gamma Gaussian Cox Processes.'' Methodology and Computing in Applied Probability 19(2):447--465.}  
+		Studied Cox processes with intensity given by a squared GP, linking to Gamma/chi-square distributions.  
+		\emph{Why CSCP:} Again-- need to look at this more carefully. Closest modern methodological contribution to what we seem to be doing; as above, our proposed CSCP extends to multi-scale and applied contexts.
+		
+		\item \textbf{Nicolis, O., Fernández, L., Muñoz, J.E. (2022). ``Temporal Cox Process with Folded Normal Intensity.'' Axioms 11(10):513.}  
+		Considered alternative positive transforms of Gaussian processes (absolute value -- I mentioned this earlier today in a chat with Adrian!!), and reviewed related Gamma/chi-square intensity models.  
+		\emph{Why CSCP:} Confirms interest in non-log link functions; folded-normal is a sibling to chi-square. Definitely warrants at least a skim-read...
+	\end{itemize}
+	
+\end{document}
