@@ -40,19 +40,19 @@
 	\section*{Astronomy}
 	
 	\begin{itemize}
-		\item \textbf{Coil, A. (2012). ``Large Scale Structure of the Universe.'' NED Review.}  
+		\item \textbf{Coil, A. (2012). ``Large Scale Structure of the Universe \textit{in} Planets, Stars and Stellar Systems vol 6}  
 		Described the halo model: galaxy clustering is explained as the sum of ``one-halo'' (within halos) and ``two-halo'' (between halos) terms.  
 		\emph{Why CSCP:} This is directly analogous to additive multi-scale clustering; CSCP could possibly model halo-scale and cosmic-web-scale fields as independent components   ??
 		
 		\item \textbf{Martínez, V.J., Saar, E. (2002). \emph{Statistics of the Galaxy Distribution.}}  
-		Surveyed point process models (including Cox and segment Cox) for cosmic structures, showing multi-scale clustering signatures.  
+		Apparently surveyed point process models (including Cox and segment Cox) for cosmic structures, showing multi-scale clustering signatures.  I can't get immediate access to this book to inspect more closely.
 		\emph{Why CSCP:} Provides motivation for additive Cox models in cosmology, which could capture both fine and coarse clustering hierarchies. Could be quite handy.
 	\end{itemize}
 	
 	\section*{Seismology}
 	
 	\begin{itemize}
-		\item \textbf{Siino, M., Adelfio, G., D’Alessandro, A. (2017). ``Spatial pattern analysis using hybrid models: an application to the Hellenic seismicity.'' Stoch. Env. Res. Risk Assess. 31:1633--1648.}  
+		\item \textbf{Marianna Siino, Giada Adelfio, Jorge Mateu, Marcello Chiodi \& Antonino D’Alessandro. (2017). ``Spatial pattern analysis using hybrid models: an application to the Hellenic seismicity.'' Stoch. Env. Res. Risk Assess. 31:1633--1648.}  
 		Modeled Greek earthquake locations as a hybrid: background seismicity plus clustered aftershocks.  
 		\emph{Why CSCP:} Earthquakes are a natural additive process (background + aftershocks); a CSCP could formalize this as independent intensity fields.
 		
@@ -60,9 +60,6 @@
 		Developed methods to decompose point patterns into scale-specific components, illustrated with seismic data.  
 		\emph{Why CSCP:} Their decomposition in spirit should align with a CSCP’s generative additive structure.
 		
-		\item \textbf{Adelfio, G., Chiodi, M. (2020). ``Overview of methods for multi-structure point processes.'' Stoch. Env. Res. Risk Assess. 34:17--36.}  
-		Reviewed methods for modeling multi-structured point processes across domains. Highlighted superposition as a key tool for multi-scale clustering.  
-		\emph{Why CSCP:} Reinforces the idea that additive models like CSCPs are often more natural than multiplicative LGCPs. This could be quite an important paper to cite.
 	\end{itemize}
 	
 	\section*{Theory and Methodology}
@@ -80,11 +77,7 @@
 		Proposed efficient Bayesian inference for permanental processes using kernel methods.  
 		\emph{Why CSCP:} Shows computational feasibility of additive chi-square intensities... not too keen on worrying about the Bayesian angle just yet, but should keep this in mind.
 		
-		\item \textbf{Walder, C.J., Bishop, A.N. (2017). ``Gamma Gaussian Cox Processes.'' Methodology and Computing in Applied Probability 19(2):447--465.}  
-		Studied Cox processes with intensity given by a squared GP, linking to Gamma/chi-square distributions.  
-		\emph{Why CSCP:} Again-- need to look at this more carefully. Closest modern methodological contribution to what we seem to be doing; as above, our proposed CSCP extends to multi-scale and applied contexts.
-		
-		\item \textbf{Nicolis, O., Fernández, L., Muñoz, J.E. (2022). ``Temporal Cox Process with Folded Normal Intensity.'' Axioms 11(10):513.}  
+		\item \textbf{Nicolis, O., et al (2022). ``Temporal Cox Process with Folded Normal Intensity.'' Axioms 11(10):513.}  
 		Considered alternative positive transforms of Gaussian processes (absolute value -- I mentioned this earlier today in a chat with Adrian!!), and reviewed related Gamma/chi-square intensity models.  
 		\emph{Why CSCP:} Confirms interest in non-log link functions; folded-normal is a sibling to chi-square. Definitely warrants at least a skim-read...
 	\end{itemize}
