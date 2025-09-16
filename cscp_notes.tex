@@ -255,35 +255,6 @@ This is the key diagnostic difference:
 Thus, while the two models can look superficially similar on a linear scale, the semilog representation reveals that only the CSCP decomposes naturally into interpretable multi-scale contributions.
 
 
-\section{Dealing with the mean}
-We'd like to control the expected number of points, preferably decoupling from the variance(s). A natural first attempt at a stationary reparameterisation is to work with
-\[
-\bar\lambda, \quad w \in [0,1], \quad \{\alpha_i\}_{i=1}^k, \quad \sum_i \alpha_i = 1,
-\]
-where $\bar\lambda$ is the target mean intensity, $w$ allocates the proportion of this mean explained by the stochastic CSCP component, and $\alpha_i$ partitions $w\bar\lambda$ across the $k$ Gaussian-field summands.  In this scheme one sets
-\[
-\sigma_i^2 = w \, \bar\lambda \, \alpha_i, 
-\qquad \mu_i = 0,
-\]
-so that the overall mean is respected.
-
-\paragraph{Limitations.}
-This parameterisation has several drawbacks:
-\begin{itemize}
-	\item \emph{Entanglement of mean and variance:} Since the variances $\sigma_i^2$ are tied directly to $\bar\lambda$, increasing the expected number of points also changes the second-order clustering structure. Thus a dataset with 100 points and one with 10{,}000 points would imply different $g(h)$ curves even if the underlying spatial correlation should be the same.
-	\item \emph{Lack of invariance:} For a Cox process one would ideally like the pair correlation $g(h)$ to depend on correlation ranges $\phi_i$ and relative weights $\alpha_i$, not on the overall sample size. The above construction does not preserve this invariance.
-	\item \emph{Identifiability issues:} Different combinations of $(\bar\lambda, w, \alpha_i)$ can lead to the same mean intensity but distinct implied clustering, making fitted values hard to interpret. With large $k$ this risks overfitting.
-\end{itemize}
-
-\paragraph{Alternative: Mean-invariant scaling.}
-A cleaner approach is to decouple the first- and second-order structures. One may write
-\[
-\Lambda(s) = \lambda_0 + \sum_{i=1}^k Z_i^2(s),
-\]
-with $\lambda_0$ as a separate baseline mean intensity, and $Z_i$ Gaussian fields with variance parameters $\sigma_i^2$ and ranges $\phi_i$. Here the expected total intensity is governed by $\lambda_0 + \sum_i \sigma_i^2$, while the pair correlation function is determined entirely by $(\sigma_i^2, \phi_i)$. This ensures that increasing $\bar\lambda$ via $\lambda_0$ does not alter the shape of $g(h)$, giving stable second-order behaviour across sample sizes.
-
-\paragraph{Caution on $k$.}
-Although the mean-invariant form has cleaner separation, identifiability remains delicate when many components are allowed. With $k\geq 3$ it becomes increasingly difficult to distinguish overlapping scales, and parameter trade-offs between $\lambda_0$ and $\{\sigma_i^2\}$ can emerge. In practice, 2--3 components are likely the most defensible balance between flexibility and identifiability.
 
 
 
@@ -505,7 +476,7 @@ Figure \ref{fig:repam} gives realisations of two 2-component CSCPs, one set with
 \end{figure}
 
 
-\subsection{Dealing with $0<w<1$}
+\subsection{Dealing with $0\leq w<1$}
 
 Reminder: $w\in[0,1]$ specifies the fraction of the
 mean intensity carried by the \emph{clustered} (random) part, with the remaining
@@ -586,7 +557,7 @@ Figure \ref{fig:smallerw} again gives realisations of two 2-component CSCPs, thi
 \begin{figure}
 	\includegraphics[width=0.7\textwidth]{fig_repam_wsmaller1.pdf}\\
 	\includegraphics[width=0.7\textwidth]{fig_repam_wsmaller2.pdf}\\
-	\caption{Two sets of realisations (six each) for $w\in\{0.75,0.1\}$, of a reparameterised $k=2$ CSCP.}\label{fig:repam}
+	\caption{Two sets of realisations (six each) for $w\in\{0.75,0.1\}$, of a reparameterised $k=2$ CSCP.}\label{fig:smallerw}
 \end{figure}
 
 
@@ -1025,6 +996,37 @@ practical merits and to provide the first systematic comparison with LGCPs in ap
 %	$(\kappa,\alpha_i,\phi_i)$ from $g(h)$ (e.g.\ via the semilog two–line
 %	initialisation and a minimum–contrast refinement).
 %	
+%\section{Dealing with the mean}
+%We'd like to control the expected number of points, preferably decoupling from the variance(s). A natural first attempt at a stationary reparameterisation is to work with
+%\[
+%\bar\lambda, \quad w \in [0,1], \quad \{\alpha_i\}_{i=1}^k, \quad \sum_i \alpha_i = 1,
+%\]
+%where $\bar\lambda$ is the target mean intensity, $w$ allocates the proportion of this mean explained by the stochastic CSCP component, and $\alpha_i$ partitions $w\bar\lambda$ across the $k$ Gaussian-field summands.  In this scheme one sets
+%\[
+%\sigma_i^2 = w \, \bar\lambda \, \alpha_i, 
+%\qquad \mu_i = 0,
+%\]
+%so that the overall mean is respected.
+%
+%\paragraph{Limitations.}
+%This parameterisation has several drawbacks:
+%\begin{itemize}
+%	\item \emph{Entanglement of mean and variance:} Since the variances $\sigma_i^2$ are tied directly to $\bar\lambda$, increasing the expected number of points also changes the second-order clustering structure. Thus a dataset with 100 points and one with 10{,}000 points would imply different $g(h)$ curves even if the underlying spatial correlation should be the same.
+%	\item \emph{Lack of invariance:} For a Cox process one would ideally like the pair correlation $g(h)$ to depend on correlation ranges $\phi_i$ and relative weights $\alpha_i$, not on the overall sample size. The above construction does not preserve this invariance.
+%	\item \emph{Identifiability issues:} Different combinations of $(\bar\lambda, w, \alpha_i)$ can lead to the same mean intensity but distinct implied clustering, making fitted values hard to interpret. With large $k$ this risks overfitting.
+%\end{itemize}
+%
+%\paragraph{Alternative: Mean-invariant scaling.}
+%A cleaner approach is to decouple the first- and second-order structures. One may write
+%\[
+%\Lambda(s) = \lambda_0 + \sum_{i=1}^k Z_i^2(s),
+%\]
+%with $\lambda_0$ as a separate baseline mean intensity, and $Z_i$ Gaussian fields with variance parameters $\sigma_i^2$ and ranges $\phi_i$. Here the expected total intensity is governed by $\lambda_0 + \sum_i \sigma_i^2$, while the pair correlation function is determined entirely by $(\sigma_i^2, \phi_i)$. This ensures that increasing $\bar\lambda$ via $\lambda_0$ does not alter the shape of $g(h)$, giving stable second-order behaviour across sample sizes.
+%
+%\paragraph{Caution on $k$.}
+%Although the mean-invariant form has cleaner separation, identifiability remains delicate when many components are allowed. With $k\geq 3$ it becomes increasingly difficult to distinguish overlapping scales, and parameter trade-offs between $\lambda_0$ and $\{\sigma_i^2\}$ can emerge. In practice, 2--3 components are likely the most defensible balance between flexibility and identifiability.
 	
-	
+
+
+
 \end{document}
