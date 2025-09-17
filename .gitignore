@@ -20,6 +20,7 @@
 .RData
 
 # RStudio files
+*.Rproj
 .Rproj.user/
 
 # knitr and R markdown default cache directories
